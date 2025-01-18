@@ -21,7 +21,7 @@
 
 <div align="center">
 
-中文 | [English](./README_en.md)
+中文 | [English](./README_en.md) | [日本語](./README_jp.md)
 
 </div>
 
