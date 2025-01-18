@@ -1,3 +1,5 @@
+# miniMind: Micro intellignece great great potential
+
 <div align="center">
 
 ![logo](./images/logo.png)
@@ -5,7 +7,6 @@
 </div>
 
 <div align="center">
-
 ![visitors](https://visitor-badge.laobi.icu/badge?page_id=jingyaogong/minimind)
 [![GitHub Repo stars](https://img.shields.io/github/stars/jingyaogong/minimind?style=social)](https://github.com/jingyaogong/minimind/stargazers)
 [![GitHub Code License](https://img.shields.io/github/license/jingyaogong/minimind)](LICENSE)
@@ -17,20 +18,21 @@
 
 <div align="center">
   <h3>「大道至簡」</h3>
+  <p>"シンプルさこそ究極の洗練"</p>
 </div>
 
 <div align="center">
-  
 [中国語](./README.md) | [English](./README_en.md) | [日本語](./README_jp.md)
 
 このページは暫定的な日本語翻訳版です。
+
 
 </div>
 
 * このオープンソースプロジェクトは、完全にゼロから始めて、最短でわずか3時間の学習でサイズ約26.88Mの小型言語モデル **MiniMind** を作り上げることを目指しています。  
 * **MiniMind** は非常に軽量で、最小バージョンのサイズは GPT-3 の約 \(\frac{1}{7000}\) 相当。一般的な個人用GPUでも、推論から学習までスムーズに体験できるように工夫されています。  
-* **MiniMind** では、大規模モデルにおける極簡な構造、データセットのクレンジングと前処理、教師あり事前学習（Pretrain）、教師あり命令微調整（SFT）、LoRAによる低次元適応微調整、報酬なし強化学習を用いた好みの直接調整（DPO）など、全段階のコードを公開しています。さらに、混合エキスパート（MoE）を活用した疎行列モデルや、視覚多モーダルへの拡張 [MiniMind-V](https://github.com/jingyaogong/minimind-v) も含まれています。  
-* これは単にオープンソースのモデルを実装しただけでなく、LLM（大規模言語モデル）を学ぶための入門的なチュートリアルとしても機能します。  
+* **MiniMind** では、大規模言語モデルの最小構造、データセットのクリーニングと前処理、教師あり事前学習（Pretrain）、教師ありファインチューニング（SFT）、低ランク適応(LoRA)手法、DPO(Direct Preference Optimization)など、全段階のコードを公開しています。さらに、混合エキスパート(MoE)による疎モデルの拡張や、視覚マルチモーダルVLM: [MiniMind-V](https://github.com/jingyaogong/minimind-v) も含まれています。  
+* これは単にオープンソースのモデルを実装しただけでなく、大規模言語モデル（LLM）を学ぶための入門的なチュートリアルとしても機能します。  
 * 本プロジェクトをきっかけに、研究者の方々が気軽にLLMを試し、さらなる探究と革新を進めてくださることを願っています。
 
   > 誤解を避けるために補足すると、「最短3時間」というのは、本プロジェクトの作者が使用しているマシンスペック以上のリソースを搭載した環境での推定値です。詳細なスペックは後述します。
@@ -47,13 +49,13 @@
 
 </div>
 
-# 📌 はじめに
+## 📌 はじめに
 
 GPT、LLaMA、GLMなどに代表される大規模言語モデル（LLM）は、高い性能を示しています。しかし、たとえばパラメータ数が100億を超えるようなモデルは、個人のGPUではメモリ不足で学習どころか推論すら難しいことがしばしばあります。  
 また、単に大規模モデルを部分的にLoRAでファインチューニングして「いくつかの命令を学習させる」だけでは、真の意味でLLMを理解したとは言えません。これは例えるなら、「ニュートンがスマートフォンを使いこなす方法」を教えているようなもので、肝心の学問の面白さから離れてしまいがちです。  
 さらに昨今は、有料の講座やサブスクなどで中途半端な知識を元にした解説が氾濫していて、LLMの本質を学びたい人にとっては学習の妨げとなっています。
 
-そこで、本プロジェクトの目標は、LLMを扱う敷居を徹底的に下げ、「0から直接軽量のモデルをトレーニングする」やり方を提示することにあります。
+そこで、本プロジェクトの目標は、LLMを扱うハードルを徹底的に下げ、「0から直接軽量のモデルをトレーニングする」やり方を提示することにあります。
 
 > [!TIP]
 > （2024年9月17日時点）MiniMindシリーズは、すでに3種類のモデルを事前学習済みで、最小モデル（26M, 0.02B）ながら、対話をスムーズにできる能力を備えています！
@@ -68,7 +70,7 @@ GPT、LLaMA、GLMなどに代表される大規模言語モデル（LLM）は、
 
 プロジェクト概要：
 
-- MiniMindのモデル（DenseおよびMoE構造）、事前学習（Pretrain）からSFT命令微調整、LoRA微調整、DPOによる好み合わせまで、一連のコードとデータセットをすべて公開しています。  
+- MiniMindのモデル（DenseおよびMoE構造）、事前学習（Pretrain）からSFT、LoRA、DPOによる好み合わせまで、一連のコードとデータセットをすべて公開しています。  
 - `transformers`、`accelerate`、`trl`、`peft` などの人気フレームワークに対応。  
 - シングルGPU/マルチGPU（DDP、DeepSpeed）トレーニングに対応し、`wandb` で学習過程を可視化可能。途中で一度中断しても後から再開できるよう設計しています。  
 - Cevalデータセットを使った簡単なモデル評価コードも用意しています。  
@@ -121,7 +123,7 @@ GPT、LLaMA、GLMなどに代表される大規模言語モデル（LLM）は、
 
 </details>
 
-# 📌 環境構成
+## 📌 環境構成
 
 これはあくまで筆者の環境です。各自の環境によって調整してください。  
 
@@ -138,7 +140,7 @@ GPU：NVIDIA GeForce RTX 3090（24GB）×2
 * CUDA == 12.2
 * [requirements.txt](./requirements.txt)
 
-# 📌 クイックテスト (Quick Start Test)
+## 📌 クイックテスト (Quick Start Test)
 
 <div align="center" style="font-size: 1.5em; font-weight: bold;">
   <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face Logo" style="vertical-align: middle; height: 30px;" />
@@ -170,15 +172,17 @@ python 2-eval.py
 streamlit run fast_inference.py
 ```
 
-# 📌 クイックトレーニング (Quick Start Train)
+## 📌 クイックトレーニング (Quick Start Train)
 
-* 0、まずはプロジェクトをクローン
+###  0. まずはプロジェクトをクローン
     ```bash
     git clone https://github.com/jingyaogong/minimind.git
     cd minimind
     ```
 
-* 1、環境をセットアップ
+###  1. 環境をセットアップ
+
+
   ```bash
   pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
   ```
@@ -189,45 +193,55 @@ streamlit run fast_inference.py
   print(torch.cuda.is_available())
   ```
 
-  > もし使えないなら [torch_stable](https://download.pytorch.org/whl/torch_stable.html) などから対応するWHLをダウンロードしてインストールし、環境を整えてください。  
+  > もし使えないなら [torch_stable](https://download.pytorch.org/whl/torch_stable.html) などから対応するwhlをダウンロードしてインストールし、環境を整えてください。  
 
-* 2、自力で学習を試したい場合
 
-    * 2.1 [データセットのダウンロードリンク](#データセットダウンロード先)からファイルを入手し、`./dataset` ディレクトリに配置します。  
+### 2. 自力で学習を試したい場合
 
-    * 2.2 `python data_process.py` を実行し、データを前処理します。たとえば事前学習用データのトークナイズや、SFT用のQ&A抽出などを行います。  
+* 2.1 [データセットのダウンロードリンク](#データセットダウンロード先)から必要なファイルを入手し、`./dataset` ディレクトリに配置します。  
 
-    * 2.3 `./model/LMConfig.py` を開いて、必要に応じ `dim` や `n_layers`、`use_moe` などのパラメータを調整します。  
-      > 例：`(512 + 8)` や `(768 + 16)` は、それぞれ `minimind-v1-small` と `minimind-v1` に対応します。
+* 2.2 `python data_process.py` を実行し、データを前処理します。
+  たとえば事前学習（Pretrain）データのトークン化や、SFT用データセットからQ&A抽出などを行います。  
 
-    * 2.4 `python 1-pretrain.py` を実行して、事前学習（Pretrain）を行います。完了すると `pretrain_*.pth` が出力されます。  
+* 2.3 `./model/LMConfig.py` でモデルのパラメータ設定を調整
+  
+  > ここでは主にdimとn_layersとuse_moeパラメータを調整します。
+  > それぞれ `(512 + 8)` や `(768 + 16)` に設定すると、`minimind-v1-small` と `minimind-v1` に対応します。
+  
+* 2.4 `python 1-pretrain.py` を実行して、事前学習（Pretrain）を行います。
+  完了すると重み `pretrain_*.pth` が出力されます。  
 
-    * 2.5 `python 3-full_sft.py` を実行して、命令（指令）微調整（SFT）を行います。完了すると `full_sft_*.pth` が出力されます。  
+* 2.5 `python 3-full_sft.py` を実行して、教師ありファインチューニング（SFT）を行います。
+  完了すると重み `full_sft_*.pth` が出力されます。  
 
-    * 2.6 必要に応じて `python 4-lora_sft.py` でLoRAによる微調整を行います（任意）。  
+* 2.6 必要に応じて `python 4-lora_sft.py` で低ランク適応（LoRA）手法によるファインチューニングを行います（任意）。  
 
-    * 2.7 必要に応じて `python 5-dpo_train.py` でDPOによる好み調整（RLHFの一種）を行います（任意）。  
+* 2.7 必要に応じて `python 5-dpo_train.py` でDPO（Direct Preference Optimization, RLHFの一種）を行います（任意）。  
 
-* 3、モデル推論を試す  
-    * 学習済みのパラメータファイル `*.pth` が `./out/` 配下にあることを確認します。  
-    * あるいは[学習済みモデルの重み](#学習済みモデルの重み)をダウンロードして `*.pth` を利用してもOKです。  
-      ```text
-      minimind/out
-      ├── multi_chat
-      │   ├── full_sft_512.pth
-      │   ├── full_sft_512_moe.pth
-      │   └── full_sft_768.pth
-      ├── single_chat
-      │   ├── full_sft_512.pth
-      │   ├── full_sft_512_moe.pth
-      │   └── full_sft_768.pth
-      ├── pretrain_768.pth
-      ├── pretrain_512_moe.pth
-      ├── pretrain_512.pth
-      ```
-    * `python 0-eval_pretrain.py` で事前学習モデルの連想生成（次トークン予測）を確認します。  
-    * `python 2-eval.py` でチャット形式の推論を確認します。  
-      ![2-eval](./images/2-eval.png)
+
+### 3. モデルの推論効果をテスト
+
+- 使用したい学習済みの重み `*.pth` ファイルが `./out/` ディレクトリ配下にあることを確認してください。  
+
+* あるいは[学習済みモデル](#学習済みモデルの重み)をダウンロードして、訓練済みの重みファイル `*.pth` を使用することも可能です。
+  ```text
+  minimind/out
+  ├── multi_chat
+  │   ├── full_sft_512.pth
+  │   ├── full_sft_512_moe.pth
+  │   └── full_sft_768.pth
+  ├── single_chat
+  │   ├── full_sft_512.pth
+  │   ├── full_sft_512_moe.pth
+  │   └── full_sft_768.pth
+  ├── pretrain_768.pth
+  ├── pretrain_512_moe.pth
+  ├── pretrain_512.pth
+  ```
+* `python 0-eval_pretrain.py` で事前学習モデルの連想生成（次トークン予測）を確認します。  
+* `python 2-eval.py` でチャット形式の推論を確認します。  
+  ![2-eval](./images/2-eval.png)
+
 
 🍭「ヒント」：事前学習（1-pretrain.py）と全パラメータ微調整（3-full_sft.py）は、ともにマルチGPUによる加速に対応しています
 
@@ -239,28 +253,31 @@ python 3-full_sft.py
 
 > GPUがN枚ある場合（N>1）はマルチGPUを使って高速化できます。
 
-* 単機N枚（DDP）
+* 1マシンのN枚のマルチGPU環境でトレーニングを開始(DDP: Distributed Data Parallel)
+    
     ```bash
     torchrun --nproc_per_node N 1-pretrain.py
     torchrun --nproc_per_node N 3-full_sft.py
     ```
-* 単機N枚（DeepSpeed）
+* 1マシンのN枚のマルチGPU環境でトレーニングを開始(DeepSpeed)
+    
     ```bash
     deepspeed --master_port 29500 --num_gpus=N 1-pretrain.py
     deepspeed --master_port 29500 --num_gpus=N 3-full_sft.py
     ```
 * `wandb` を使って学習を可視化したい場合（必須ではありません）
+    
     ```bash
     torchrun --nproc_per_node N 1-pretrain.py --use_wandb
     # シングルGPUなら
     python 1-pretrain.py --use_wandb
-    ```
+  ```
   引数 `--use_wandb` を指定すると WandB (Weights & Biases) に学習ログを記録可能。  
   `wandb_project` や `wandb_run_name` を変更すると、プロジェクト名・実行名を指定できます。
 
-# 📌 データソース
+## 📌 データソース
 
-- 🤖 **分詞器（Tokenizer）**  
+- 🤖 **トークナイザー（Tokenizer）**  
   NLP分野では、自然言語を単語あるいはサブワード単位に分割し、対応するIDに変換するための「辞書」を作る必要があります。これは大規模言語モデル（LLM）において、単語埋め込みや出力層とのマッピングとしてとても重要です。  
   Tokenizerの作り方は主に2通りあり、自分で小さな語彙リストを学習させるか（`train_tokenizer.py` を参照）、すでに公開されているTokenizerを拝借するかのいずれかです。  
   語彙数があまりに大きいとEmbeddingだけでも膨大になり小型モデルを圧迫するため、MiniMindでは自作Tokenizerを用いて6400というコンパクトな語彙数に抑えています。  
@@ -268,16 +285,18 @@ python 3-full_sft.py
 
   <table>
     <tr><th>Tokenizerモデル</th><th>語彙サイズ</th><th>開発元</th></tr>
-    <tr><td>yi tokenizer</td><td>64,000</td><td>01万物（中国）</td></tr>
+    <tr><td>yi tokenizer</td><td>64,000</td><td>01-ai（中国）</td></tr>
     <tr><td>qwen2 tokenizer</td><td>151,643</td><td>アリババクラウド（中国）</td></tr>
     <tr><td>glm tokenizer</td><td>151,329</td><td>智谱AI（中国）</td></tr>
     <tr><td>mistral tokenizer</td><td>32,000</td><td>Mistral AI（フランス）</td></tr>
     <tr><td>llama3 tokenizer</td><td>128,000</td><td>Meta（アメリカ）</td></tr>
-    <tr><td>minimind tokenizer</td><td>6,400</td><td>自作</td></tr>
+    <tr><td>minimind tokenizer</td><td>6,400</td><td>カスタム</td></tr>
   </table>
 
+  
   > 2024年9月17日以降、モデルサイズを小さく保ちつつ混乱を避けるため、`minimind_tokenizer` に完全統一しました（`mistral_tokenizer`は廃止）。  
-  > 現時点で生じうる圧縮効率の低下や生僻単語の扱いなどは、テストにより大きな問題がないことを確認済みです。
+  > minimind_tokenizerの長さは非常に小さく、エンコード・デコード効率はqwen2やglmなどの中国語に適したトークナイザーよりも劣ります。 しかし、minimindモデルは独自に訓練した、語彙サイズが6400しかない`minimind_tokenizer`をトークナイザーとして選択することで、全体的なパラメータの軽量性を保ち、エンコード層と計算層の比率の不均衡により頭でっかちになるのを回避しています。
+  >  また、minimindは実際のテストで珍しい単語のデコードに失敗するケースは発生しておらず、良好な効果を示しています。 カスタム語彙表を6400まで圧縮することで、LLMの総パラメータ数を最小で26Mにすることができました。
 
 ---
 
