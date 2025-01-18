@@ -22,6 +22,7 @@
 </div>
 
 <div align="center">
+  
 [中国語](./README.md) | [English](./README_en.md) | [日本語](./README_jp.md)
 
 このページは暫定的な日本語翻訳版です。
