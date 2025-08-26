@@ -6,10 +6,9 @@ client = OpenAI(
 )
 
 # 初始化对话历史列表
-conversation_history_origin = []
-conversation_history = conversation_history_origin.copy()
+conversation_history = []
+
 while True:
-    conversation_history = conversation_history_origin.copy()
     query = input('[Q]:')
 
     # 将用户的问题添加到对话历史中
