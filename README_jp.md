@@ -1,4 +1,4 @@
-# miniMind: Micro intellignece great great potential
+# MiniMind: 小さな知能、大きな可能性
 
 <div align="center">
 
@@ -23,12 +23,6 @@
 
 <div align="center">
   
-[中国語](./README.md) | [English](./README_en.md) | [日本語](./README_jp.md)
-
-このページは暫定的な日本語翻訳版です。
-
-
-</div>
 
 * このオープンソースプロジェクトは、完全にゼロから始めて、最短でわずか3時間の学習でサイズ約26.88Mの小型言語モデル **MiniMind** を作り上げることを目指しています。  
 * **MiniMind** は非常に軽量で、最小バージョンのサイズは GPT-3 の約 \(\frac{1}{7000}\) 相当。一般的な個人用GPUでも、推論から学習までスムーズに体験できるように工夫されています。  
